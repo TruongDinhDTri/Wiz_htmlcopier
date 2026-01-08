@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    /* Reset & Base */
+    * {
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      width: 360px;
+      height: 480px;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+      background-color: #87CEEB;
+      color: #4a4a4a;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Dreamy Sky Background - Ghibli Inspired */
+    .bg-gradient {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(180deg, 
+        #FFE5B4 0%,     /* Soft peach/cream at top */
+        #B0E0E6 30%,    /* Powder blue */
+        #87CEEB 60%,    /* Sky blue */
+        #8FBC8F 100%    /* Dusty sage green at bottom */
+      );
+      z-index: 0;
+    }
+
+    /* Floating Cloud Elements */
+    .cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 100px;
+      z-index: 1;
+      filter: blur(12px);
+      animation: float-cloud 20s infinite ease-in-out;
+    }
+    
+    .cloud-1 {
+      width: 120px;
+      height: 40px;
+      top: 10%;
+      left: -20px;
+      animation-delay: 0s;
+    }
+    
+    .cloud-2 {
+      width: 90px;
+      height: 30px;
+      top: 25%;
+      right: -15px;
+      animation-delay: -8s;
+    }
+    
+    .cloud-3 {
+      width: 100px;
+      height: 35px;
+      bottom: 20%;
+      left: 10%;
+      animation-delay: -15s;
+    }
+
+    @keyframes float-cloud {
+      0%, 100% { transform: translate(0, 0); opacity: 0.7; }
+      50% { transform: translate(30px, -10px); opacity: 0.4; }
+    }
+
+    /* Subtle Texture Overlay */
+    .texture {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 0%, transparent 50%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Main Content Container */
+    .container {
+      padding: 32px 28px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Header */
+    header {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-weight: 300;
+      font-size: 32px;
+      color: #2c3e50;
+      margin: 0;
+      letter-spacing: 0.5px;
+      text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.8);
+      opacity: 0.95;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      color: #5d7285;
+      margin-top: 6px;
+      font-weight: 400;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+    }
+
+    /* Toggles List - Glass Card Effect */
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 24px 20px;
+      box-shadow: 
+        0 8px 32px rgba(135, 206, 235, 0.15),
+        inset 0 1px 0 rgba(255,255,255,0.6),
+        0 1px 2px rgba(0,0,0,0.05);
+      border: 1.5px solid rgba(255,255,255,0.6);
+    }
+
+    .option-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 16px;
+      transition: background 0.3s ease;
+    }
+
+    .option-item:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .option-label {
+      font-size: 15px;
+      font-weight: 500;
+      color: #3d5a70;
+      text-shadow: 0 1px 1px rgba(255,255,255,0.5);
+    }
+
+    /* Custom Toggle Switch - More Organic */
+    input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 50px;
+      height: 26px;
+      background: rgba(160, 160, 160, 0.3);
+      border-radius: 13px;
+      position: relative;
+      cursor: pointer;
+      outline: none;
+      transition: background 0.4s ease;
+      border: 1px solid rgba(255,255,255,0.4);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    input[type="checkbox"]::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+      border-radius: 50%;
+      box-shadow: 
+        0 3px 8px rgba(0,0,0,0.15),
+        0 1px 2px rgba(0,0,0,0.2);
+      transition: transform 0.4s cubic-bezier(0.3, 1.5, 0.7, 1);
+    }
+
+    input[type="checkbox"]:checked {
+      background: linear-gradient(135deg, #A8D5BA 0%, #7FB69E 100%);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+    input[type="checkbox"]:checked::after {
+      transform: translateX(24px);
+    }
+
+    /* Action Area */
+    .actions {
+      margin-top: 20px;
+    }
+
+    button#copyBtn {
+      width: 100%;
+      height: 58px;
+      border: none;
+      border-radius: 29px;
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.8) 0%, 
+        rgba(255, 250, 240, 0.6) 100%
+      );
+      backdrop-filter: blur(10px);
+      color: #3d5a70;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 
+        0 10px 30px rgba(143, 188, 143, 0.25),
+        inset 0 1px 0 rgba(255,255,255,0.8),
+        0 1px 3px rgba(0,0,0,0.1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid rgba(255,255,255,0.7);
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+    }
+
+    button#copyBtn:hover {
+      transform: translateY(-3px);
+      box-shadow: 
+        0 15px 40px rgba(143, 188, 143, 0.35),
+        inset 0 1px 0 rgba(255,255,255,0.9),
+        0 2px 4px rgba(0,0,0,0.15);
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.9) 0%, 
+        rgba(255, 250, 240, 0.75) 100%
+      );
+    }
+
+    button#copyBtn:active {
+      transform: translateY(-1px) scale(0.98);
+    }
+
+    /* Feedback Status */
+    #status {
+      text-align: center;
+      height: 20px;
+      margin-top: 14px;
+      font-size: 13px;
+      color: #5d7285;
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      text-shadow: 0 1px 2px rgba(255,255,255,0.6);
+    }
+
+    #status.visible {
+      opacity: 1;
+    }
+    
+    /* Decorative Floating Particles */
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      z-index: 1;
+      animation: float-particle 15s infinite ease-in-out;
+    }
+    
+    .p1 { top: 15%; left: 15%; animation-delay: 0s; }
+    .p2 { top: 45%; right: 20%; animation-delay: -5s; width: 3px; height: 3px; }
+    .p3 { bottom: 30%; left: 25%; animation-delay: -10s; width: 5px; height: 5px; }
+    .p4 { top: 60%; right: 15%; animation-delay: -7s; }
+    
+    @keyframes float-particle {
+      0%, 100% { 
+        transform: translate(0, 0); 
+        opacity: 0.3; 
+      }
+      50% { 
+        transform: translate(15px, -20px); 
+        opacity: 0.8; 
+      }
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="bg-gradient"></div>
+  <div class="texture"></div>
+  
+  <!-- Floating clouds -->
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+  
+  <!-- Floating particles -->
+  <div class="particle p1"></div>
+  <div class="particle p2"></div>
+  <div class="particle p3"></div>
+  <div class="particle p4"></div>
+
+  <div class="container">
+    <header>
+      <h1>HTML Copier</h1>
+      <div class="subtitle">Clean & Capture</div>
+    </header>
+
+    <div class="options-list">
+      <label class="option-item">
+        <span class="option-label">Remove Scripts</span>
+        <input type="checkbox" id="removeScripts" checked>
+      </label>
+      
+      <label class="option-item">
+        <span class="option-label">Absolute Links</span>
+        <input type="checkbox" id="fixHrefs" checked>
+      </label>
+      
+      <label class="option-item">
+        <span class="option-label">Absolute Assets</span>
+        <input type="checkbox" id="fixSrcs" checked>
+      </label>
+    </div>
+
+    <div class="actions">
+      <button id="copyBtn">Copy Page HTML</button>
+      <div id="status"></div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

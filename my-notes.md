@@ -1,0 +1,1 @@
+I like this style of this beautiful extension. This could be a reference and could be a really good blueprint, placeholder, a default, a mock that you can reference to another design. I love this design
